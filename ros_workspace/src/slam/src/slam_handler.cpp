@@ -3,11 +3,12 @@
 #include "rclcpp/rclcpp.hpp"
 #include <Eigen/Dense>
 
-// Subscribe to velocity
+// Subscribe messages
 #include <geometry_msgs/msg/twist.hpp>
+#include <slam/msg/Perception2Slam.hpp>
 
-//Publish the state_vector
-#include "slam/msg/Pose.hpp"
+// Publish message
+#include "slam/msg/PoseMsg.hpp"
 
 
 using namespace Eigen;
@@ -19,8 +20,11 @@ public:
         velocity_subscriber_ = this->create_subscription<geometry_msgs::msg::Twist>(
             "velocity_topic", 10, std::bind(&SlamNode::velocityCallback, this, std::placeholders::_1));
 
-        state_publisher_ = this->create_publisher<slam::msg::Pose>
-           ("state_topic", 10);    
+        perception_subscriber_ = this->create_subscription<slam::msg::Perception2Slam>(
+            "perception_topic", 10, std::bind(&SlamNode::PerceptionCallback, this, std::placeholders::_1));
+        )
+        state_publisher_ = this->create_publisher<slam::msg::PoseMsg>(
+            "state_topic", 10);    
     }
 
     void runSlamAlgorithm() {
@@ -51,13 +55,15 @@ public:
         VectorXd velocity(3);
         velocity << current_velocity_[0], current_velocity_[1], current_velocity_[2];
 
-        VectorXd measurements = generateRandomMeasurement();
+        VectorXd measurements(2);
+        measurements << current_perception_[3], current_perception_[2];
+
 
         predictionStep(state_vector, Sigma, velocity, Q);
         updateStep(state_vector, Sigma, measurements, Rt);
 
         // Create a Pose message
-        slam::msg::Pose pose_msg;
+        slam::msg::PoseMsg pose_msg;
         pose_msg.x = state_vector(0); // x position
         pose_msg.y = state_vector(1); // y position
         pose_msg.theta = state_vector(2); // theta orientation
@@ -333,6 +339,7 @@ VectorXd generateRandomMeasurement()
 private:
     vector<pair<double, double>> landmark_distances;
     Vector3d current_velocity_;
+    Vector4d current_perception_;
     
     void velocityCallback(const geometry_msgs::msg::Twist::SharedPtr msg) {
         // Extract velocity components
@@ -341,8 +348,16 @@ private:
         current_velocity_[2] = msg->angular.z;
     }
 
+    void PerceptionCallback(const slam::msg::Perception2Slam msg) {
+        current_perception_[0] = msg->;
+        current_perception_[1] = msg->;
+        current_perception_[2] = msg->;
+        current_perception_[3] = msg->; 
+    }
+
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr velocity_subscriber_;
-    rclcpp::Publisher<slam::msg::Pose>::SharedPtr state_publisher_;
+    rclcpp::Subscription<slam::msg::Perception2Slam>::SharedPtr perception_subscriber_;
+    rclcpp::Publisher<slam::msg::PoseMsg>::SharedPtr state_publisher_;
 };
 
 

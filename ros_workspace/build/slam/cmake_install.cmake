@@ -356,11 +356,19 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/slam/msg" TYPE FILE FILES "/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/rosidl_adapter/slam/msg/Pose.idl")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/slam/msg" TYPE FILE FILES "/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/rosidl_adapter/slam/msg/PoseMsg.idl")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/slam/msg" TYPE FILE FILES "/home/chris/Desktop/EKF-SLAM/ros_workspace/src/slam/msg/Pose.msg")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/slam/msg" TYPE FILE FILES "/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/rosidl_adapter/slam/msg/Perception2Slam.idl")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/slam/msg" TYPE FILE FILES "/home/chris/Desktop/EKF-SLAM/ros_workspace/src/slam/msg/PoseMsg.msg")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/slam/msg" TYPE FILE FILES "/home/chris/Desktop/EKF-SLAM/ros_workspace/src/slam/msg/Perception2Slam.msg")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

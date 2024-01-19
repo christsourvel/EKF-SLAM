@@ -10,12 +10,12 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(rosidl_default_generators REQUIRED)  # Required for custom message generation
+find_package(rosidl_default_generators REQUIRED)  
 
 # Define custom messages
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/Pose.msg"
-  # Add any other message or service files here
+  "msg/PoseMsg.msg"
+  "msg/Perception2Slam.msg"
 )
 
 # Add localization executable
