@@ -1,6 +1,7 @@
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/uninstall.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/slam_uninstall.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/localization.dir
+/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/slam.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/velocity_publisher.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/test.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/edit_cache.dir

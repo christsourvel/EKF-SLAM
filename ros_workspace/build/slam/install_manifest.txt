@@ -1,4 +1,5 @@
 /home/chris/Desktop/EKF-SLAM/ros_workspace/install/slam/lib/slam/localization
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/slam/lib/slam/slam
 /home/chris/Desktop/EKF-SLAM/ros_workspace/install/slam/lib/slam/velocity_publisher
 /home/chris/Desktop/EKF-SLAM/ros_workspace/install/slam/share/ament_index/resource_index/package_run_dependencies/slam
 /home/chris/Desktop/EKF-SLAM/ros_workspace/install/slam/share/ament_index/resource_index/parent_prefix_path/slam

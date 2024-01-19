@@ -211,6 +211,19 @@ localization/fast:
 .PHONY : localization/fast
 
 #=============================================================================
+# Target rules for targets named slam
+
+# Build rule for target.
+slam: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 slam
+.PHONY : slam
+
+# fast build rule for target.
+slam/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam.dir/build.make CMakeFiles/slam.dir/build
+.PHONY : slam/fast
+
+#=============================================================================
 # Target rules for targets named velocity_publisher
 
 # Build rule for target.
@@ -246,6 +259,30 @@ src/localization.s: src/localization.cpp.s
 src/localization.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization.dir/build.make CMakeFiles/localization.dir/src/localization.cpp.s
 .PHONY : src/localization.cpp.s
+
+src/slam.o: src/slam.cpp.o
+.PHONY : src/slam.o
+
+# target to build an object file
+src/slam.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam.dir/build.make CMakeFiles/slam.dir/src/slam.cpp.o
+.PHONY : src/slam.cpp.o
+
+src/slam.i: src/slam.cpp.i
+.PHONY : src/slam.i
+
+# target to preprocess a source file
+src/slam.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam.dir/build.make CMakeFiles/slam.dir/src/slam.cpp.i
+.PHONY : src/slam.cpp.i
+
+src/slam.s: src/slam.cpp.s
+.PHONY : src/slam.s
+
+# target to generate assembly for a file
+src/slam.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam.dir/build.make CMakeFiles/slam.dir/src/slam.cpp.s
+.PHONY : src/slam.cpp.s
 
 src/velocity_publisher.o: src/velocity_publisher.cpp.o
 .PHONY : src/velocity_publisher.o
@@ -287,10 +324,14 @@ help:
 	@echo "... slam_uninstall"
 	@echo "... uninstall"
 	@echo "... localization"
+	@echo "... slam"
 	@echo "... velocity_publisher"
 	@echo "... src/localization.o"
 	@echo "... src/localization.i"
 	@echo "... src/localization.s"
+	@echo "... src/slam.o"
+	@echo "... src/slam.i"
+	@echo "... src/slam.s"
 	@echo "... src/velocity_publisher.o"
 	@echo "... src/velocity_publisher.i"
 	@echo "... src/velocity_publisher.s"
