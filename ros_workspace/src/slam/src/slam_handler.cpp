@@ -6,6 +6,9 @@
 // Subscribe to velocity
 #include <geometry_msgs/msg/twist.hpp>
 
+//Publish the state_vector
+#include "slam/msg/Pose.hpp"
+
 
 using namespace Eigen;
 using namespace std;
@@ -15,6 +18,9 @@ public:
     SlamNode() : Node("Slam_node") {
         velocity_subscriber_ = this->create_subscription<geometry_msgs::msg::Twist>(
             "velocity_topic", 10, std::bind(&SlamNode::velocityCallback, this, std::placeholders::_1));
+
+        state_publisher_ = this->create_publisher<slam::msg::Pose>
+           ("state_topic", 10);    
     }
 
     void runSlamAlgorithm() {
@@ -49,6 +55,15 @@ public:
 
         predictionStep(state_vector, Sigma, velocity, Q);
         updateStep(state_vector, Sigma, measurements, Rt);
+
+        // Create a Pose message
+        slam::msg::Pose pose_msg;
+        pose_msg.x = state_vector(0); // x position
+        pose_msg.y = state_vector(1); // y position
+        pose_msg.theta = state_vector(2); // theta orientation
+
+        // Publish the Pose message
+        state_publisher_->publish(pose_msg);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
@@ -327,6 +342,7 @@ private:
     }
 
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr velocity_subscriber_;
+    rclcpp::Publisher<slam::msg::Pose>::SharedPtr state_publisher_;
 };
 
 
