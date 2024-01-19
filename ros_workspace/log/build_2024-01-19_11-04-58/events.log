@@ -1,0 +1,187 @@
+[0.000000] (-) TimerEvent: {}
+[0.001068] (my_package) JobQueued: {'identifier': 'my_package', 'dependencies': OrderedDict()}
+[0.001118] (my_package) JobStarted: {'identifier': 'my_package'}
+[0.035175] (my_package) JobProgress: {'identifier': 'my_package', 'progress': 'cmake'}
+[0.036595] (my_package) JobProgress: {'identifier': 'my_package', 'progress': 'build'}
+[0.036644] (my_package) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package', '--', '-j8', '-l8'], 'cwd': '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'chris'), ('XDG_SESSION_TYPE', 'wayland'), ('GIT_ASKPASS', '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/chris'), ('CHROME_DESKTOP', 'code-url-handler.desktop'), ('OLDPWD', '/home/chris/Desktop/EKF-SLAM'), ('TERM_PROGRAM_VERSION', '1.85.2'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('VSCODE_GIT_ASKPASS_MAIN', '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/usr/share/code/code'), ('MANAGERPID', '1534'), ('SYSTEMD_EXEC_PID', '1709'), ('IM_CONFIG_CHECK_ENV', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '33211'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/chris/Desktop/EKF-SLAM/ros_workspace/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'chris'), ('JOURNAL_STREAM', '8:31820'), ('_', '/home/chris/.local/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'chris'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/chris/.local/bin:/home/chris/.local/bin:/home/chris/.local/bin:/opt/ros/humble/bin:/home/chris/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/macubuntu:@/tmp/.ICE-unix/1689,unix/macubuntu:/tmp/.ICE-unix/1689'), ('INVOCATION_ID', '7290760dfa344b1897c6adcb1746763b'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'Unity'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.V1VGH2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-44ed7893b2.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package:/opt/ros/humble'), ('ORIGINAL_XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', '--ms-enable-electron-run-as-node'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package:/opt/ros/humble')]), 'shell': False}
+[0.083110] (my_package) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/velocity_publisher.dir/src/velocity_publisher.cpp.o\x1b[0m\n'}
+[0.083282] (my_package) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/my_node.dir/src/my_node.cpp.o\x1b[0m\n'}
+[0.100872] (-) TimerEvent: {}
+[0.201130] (-) TimerEvent: {}
+[0.302174] (-) TimerEvent: {}
+[0.402448] (-) TimerEvent: {}
+[0.502824] (-) TimerEvent: {}
+[0.603777] (-) TimerEvent: {}
+[0.704447] (-) TimerEvent: {}
+[0.805091] (-) TimerEvent: {}
+[0.905362] (-) TimerEvent: {}
+[1.007268] (-) TimerEvent: {}
+[1.110005] (-) TimerEvent: {}
+[1.211927] (-) TimerEvent: {}
+[1.313185] (-) TimerEvent: {}
+[1.415107] (-) TimerEvent: {}
+[1.515975] (-) TimerEvent: {}
+[1.518025] (my_package) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/usr/include/eigen3/Eigen/Core:214\x1b[m\x1b[K,\n'}
+[1.518173] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/usr/include/eigen3/Eigen/Dense:1\x1b[m\x1b[K,\n'}
+[1.518220] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:4\x1b[m\x1b[K:\n'}
+[1.518265] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/eigen3/Eigen/src/Core/arch/NEON/PacketMath.h:\x1b[m\x1b[K In function \xe2\x80\x98\x1b[01m\x1b[KPacket Eigen::internal::pload(const typename Eigen::internal::unpacket_traits<T>::type*) [with Packet = Eigen::internal::eigen_packet_wrapper<int, 2>; typename Eigen::internal::unpacket_traits<T>::type = signed char]\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.518314] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/eigen3/Eigen/src/Core/arch/NEON/PacketMath.h:1671:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kvoid* memcpy(void*, const void*, size_t)\x1b[m\x1b[K\xe2\x80\x99 copying an object of non-trivial type \xe2\x80\x98\x1b[01m\x1b[KEigen::internal::Packet4c\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kstruct Eigen::internal::eigen_packet_wrapper<int, 2>\x1b[m\x1b[K\xe2\x80\x99} from an array of \xe2\x80\x98\x1b[01m\x1b[Kconst int8_t\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kconst signed char\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wclass-memaccess\x07-Wclass-memaccess\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.518361] (my_package) StderrLine: {'line': b' 1671 |   \x1b[01;35m\x1b[Kmemcpy(&res, from, sizeof(Packet4c))\x1b[m\x1b[K;\n'}
+[1.518394] (my_package) StderrLine: {'line': b'      |   \x1b[01;35m\x1b[K~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.518435] (my_package) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/usr/include/eigen3/Eigen/Core:172\x1b[m\x1b[K,\n'}
+[1.518468] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/usr/include/eigen3/Eigen/Dense:1\x1b[m\x1b[K,\n'}
+[1.518509] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:4\x1b[m\x1b[K:\n'}
+[1.518539] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/eigen3/Eigen/src/Core/GenericPacketMath.h:159:8:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KEigen::internal::Packet4c\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kstruct Eigen::internal::eigen_packet_wrapper<int, 2>\x1b[m\x1b[K\xe2\x80\x99} declared here\n'}
+[1.518595] (my_package) StderrLine: {'line': b'  159 | struct \x1b[01;36m\x1b[Keigen_packet_wrapper\x1b[m\x1b[K\n'}
+[1.518627] (my_package) StderrLine: {'line': b'      |        \x1b[01;36m\x1b[K^~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.518995] (my_package) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/usr/include/eigen3/Eigen/Core:214\x1b[m\x1b[K,\n'}
+[1.519190] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/usr/include/eigen3/Eigen/Dense:1\x1b[m\x1b[K,\n'}
+[1.519229] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:4\x1b[m\x1b[K:\n'}
+[1.519286] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/eigen3/Eigen/src/Core/arch/NEON/PacketMath.h:\x1b[m\x1b[K In function \xe2\x80\x98\x1b[01m\x1b[KPacket Eigen::internal::ploadu(const typename Eigen::internal::unpacket_traits<T>::type*) [with Packet = Eigen::internal::eigen_packet_wrapper<int, 2>; typename Eigen::internal::unpacket_traits<T>::type = signed char]\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.519334] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/eigen3/Eigen/src/Core/arch/NEON/PacketMath.h:1716:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kvoid* memcpy(void*, const void*, size_t)\x1b[m\x1b[K\xe2\x80\x99 copying an object of non-trivial type \xe2\x80\x98\x1b[01m\x1b[KEigen::internal::Packet4c\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kstruct Eigen::internal::eigen_packet_wrapper<int, 2>\x1b[m\x1b[K\xe2\x80\x99} from an array of \xe2\x80\x98\x1b[01m\x1b[Kconst int8_t\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kconst signed char\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wclass-memaccess\x07-Wclass-memaccess\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.519367] (my_package) StderrLine: {'line': b' 1716 |   \x1b[01;35m\x1b[Kmemcpy(&res, from, sizeof(Packet4c))\x1b[m\x1b[K;\n'}
+[1.519409] (my_package) StderrLine: {'line': b'      |   \x1b[01;35m\x1b[K~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.519449] (my_package) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/usr/include/eigen3/Eigen/Core:172\x1b[m\x1b[K,\n'}
+[1.519489] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/usr/include/eigen3/Eigen/Dense:1\x1b[m\x1b[K,\n'}
+[1.519519] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:4\x1b[m\x1b[K:\n'}
+[1.519561] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/eigen3/Eigen/src/Core/GenericPacketMath.h:159:8:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KEigen::internal::Packet4c\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kstruct Eigen::internal::eigen_packet_wrapper<int, 2>\x1b[m\x1b[K\xe2\x80\x99} declared here\n'}
+[1.519620] (my_package) StderrLine: {'line': b'  159 | struct \x1b[01;36m\x1b[Keigen_packet_wrapper\x1b[m\x1b[K\n'}
+[1.519657] (my_package) StderrLine: {'line': b'      |        \x1b[01;36m\x1b[K^~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.616765] (-) TimerEvent: {}
+[1.718161] (-) TimerEvent: {}
+[1.821071] (-) TimerEvent: {}
+[1.921373] (-) TimerEvent: {}
+[1.999421] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[KEigen::MatrixXd LocalizationNode::motion_jacobian(const VectorXd&, const VectorXd&)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.999579] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:81:12:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused variable \xe2\x80\x98\x1b[01m\x1b[Komega\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable\x07-Wunused-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.999639] (my_package) StderrLine: {'line': b'   81 |     double \x1b[01;35m\x1b[Komega\x1b[m\x1b[K = velocity(2);\n'}
+[1.999678] (my_package) StderrLine: {'line': b'      |            \x1b[01;35m\x1b[K^~~~~\x1b[m\x1b[K\n'}
+[2.000205] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[KEigen::MatrixXd LocalizationNode::noise_transformation(const VectorXd&, const VectorXd&)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[2.000350] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:95:12:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused variable \xe2\x80\x98\x1b[01m\x1b[Kv_x\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable\x07-Wunused-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[2.000390] (my_package) StderrLine: {'line': b'   95 |     double \x1b[01;35m\x1b[Kv_x\x1b[m\x1b[K = velocity(0);\n'}
+[2.000422] (my_package) StderrLine: {'line': b'      |            \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[2.000464] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:96:12:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused variable \xe2\x80\x98\x1b[01m\x1b[Kv_y\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable\x07-Wunused-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[2.000511] (my_package) StderrLine: {'line': b'   96 |     double \x1b[01;35m\x1b[Kv_y\x1b[m\x1b[K = velocity(1);\n'}
+[2.000561] (my_package) StderrLine: {'line': b'      |            \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[2.000605] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:97:12:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused variable \xe2\x80\x98\x1b[01m\x1b[Komega\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable\x07-Wunused-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[2.000649] (my_package) StderrLine: {'line': b'   97 |     double \x1b[01;35m\x1b[Komega\x1b[m\x1b[K = velocity(2);\n'}
+[2.000685] (my_package) StderrLine: {'line': b'      |            \x1b[01;35m\x1b[K^~~~~\x1b[m\x1b[K\n'}
+[2.025843] (-) TimerEvent: {}
+[2.130630] (-) TimerEvent: {}
+[2.209255] (my_package) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/usr/include/c++/11/bits/stl_algobase.h:64\x1b[m\x1b[K,\n'}
+[2.209416] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/usr/include/c++/11/bits/char_traits.h:39\x1b[m\x1b[K,\n'}
+[2.209469] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/usr/include/c++/11/ios:40\x1b[m\x1b[K,\n'}
+[2.209525] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/usr/include/c++/11/ostream:38\x1b[m\x1b[K,\n'}
+[2.209582] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/usr/include/c++/11/iostream:39\x1b[m\x1b[K,\n'}
+[2.209626] (my_package) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:1\x1b[m\x1b[K:\n'}
+[2.209670] (my_package) StderrLine: {'line': b'/usr/include/c++/11/bits/stl_pair.h: In instantiation of \xe2\x80\x98\x1b[01m\x1b[Kconstexpr std::pair<typename std::__strip_reference_wrapper<typename std::decay<_Tp>::type>::__type, typename std::__strip_reference_wrapper<typename std::decay<_Tp2>::type>::__type> std::make_pair(_T1&&, _T2&&) [with _T1 = double&; _T2 = double&; typename std::__strip_reference_wrapper<typename std::decay<_Tp2>::type>::__type = double; typename std::decay<_Tp2>::type = double; typename std::__strip_reference_wrapper<typename std::decay<_Tp>::type>::__type = double; typename std::decay<_Tp>::type = double]\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[2.209724] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package/src/my_node.cpp:175:56:\x1b[m\x1b[K   required from here\n'}
+[2.209766] (my_package) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/c++/11/bits/stl_pair.h:567:5:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kparameter passing for argument of type \xe2\x80\x98\x1b[01m\x1b[Kstd::pair<double, double>\x1b[m\x1b[K\xe2\x80\x99 when C++17 is enabled changed to match C++14 \x1b]8;;https://gcc.gnu.org/gcc-10/changes.html#empty_base\x07in GCC 10.1\x1b]8;;\x07\n'}
+[2.209812] (my_package) StderrLine: {'line': b'  567 |     \x1b[01;36m\x1b[Kmake_pair\x1b[m\x1b[K(_T1&& __x, _T2&& __y)\n'}
+[2.209864] (my_package) StderrLine: {'line': b'      |     \x1b[01;36m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[2.232518] (-) TimerEvent: {}
+[2.332754] (-) TimerEvent: {}
+[2.434265] (-) TimerEvent: {}
+[2.448680] (my_package) StdoutLine: {'line': b'[ 75%] \x1b[32m\x1b[1mLinking CXX executable velocity_publisher\x1b[0m\n'}
+[2.534430] (-) TimerEvent: {}
+[2.572975] (my_package) StdoutLine: {'line': b'[ 75%] Built target velocity_publisher\n'}
+[2.635791] (-) TimerEvent: {}
+[2.740714] (-) TimerEvent: {}
+[2.841738] (-) TimerEvent: {}
+[2.942816] (-) TimerEvent: {}
+[3.043773] (-) TimerEvent: {}
+[3.145669] (-) TimerEvent: {}
+[3.247279] (-) TimerEvent: {}
+[3.347592] (-) TimerEvent: {}
+[3.450362] (-) TimerEvent: {}
+[3.552429] (-) TimerEvent: {}
+[3.655606] (-) TimerEvent: {}
+[3.756517] (-) TimerEvent: {}
+[3.858170] (-) TimerEvent: {}
+[3.960667] (-) TimerEvent: {}
+[4.061174] (-) TimerEvent: {}
+[4.166126] (-) TimerEvent: {}
+[4.269669] (-) TimerEvent: {}
+[4.374598] (-) TimerEvent: {}
+[4.479469] (-) TimerEvent: {}
+[4.584327] (-) TimerEvent: {}
+[4.685815] (-) TimerEvent: {}
+[4.789097] (-) TimerEvent: {}
+[4.894047] (-) TimerEvent: {}
+[4.998987] (-) TimerEvent: {}
+[5.099893] (-) TimerEvent: {}
+[5.204836] (-) TimerEvent: {}
+[5.309837] (-) TimerEvent: {}
+[5.414779] (-) TimerEvent: {}
+[5.519804] (-) TimerEvent: {}
+[5.623684] (-) TimerEvent: {}
+[5.728342] (-) TimerEvent: {}
+[5.829952] (-) TimerEvent: {}
+[5.931382] (-) TimerEvent: {}
+[6.034416] (-) TimerEvent: {}
+[6.136413] (-) TimerEvent: {}
+[6.237204] (-) TimerEvent: {}
+[6.337468] (-) TimerEvent: {}
+[6.438376] (-) TimerEvent: {}
+[6.542979] (-) TimerEvent: {}
+[6.647589] (-) TimerEvent: {}
+[6.748487] (-) TimerEvent: {}
+[6.849028] (-) TimerEvent: {}
+[6.949439] (-) TimerEvent: {}
+[7.049721] (-) TimerEvent: {}
+[7.154691] (-) TimerEvent: {}
+[7.258057] (-) TimerEvent: {}
+[7.358384] (-) TimerEvent: {}
+[7.458721] (-) TimerEvent: {}
+[7.563567] (-) TimerEvent: {}
+[7.664483] (-) TimerEvent: {}
+[7.769124] (-) TimerEvent: {}
+[7.869439] (-) TimerEvent: {}
+[7.969780] (-) TimerEvent: {}
+[8.073245] (-) TimerEvent: {}
+[8.177171] (-) TimerEvent: {}
+[8.278480] (-) TimerEvent: {}
+[8.379806] (-) TimerEvent: {}
+[8.481530] (-) TimerEvent: {}
+[8.581813] (-) TimerEvent: {}
+[8.685071] (-) TimerEvent: {}
+[8.785420] (-) TimerEvent: {}
+[8.886734] (-) TimerEvent: {}
+[8.987632] (-) TimerEvent: {}
+[9.088567] (-) TimerEvent: {}
+[9.193120] (-) TimerEvent: {}
+[9.293410] (-) TimerEvent: {}
+[9.398062] (-) TimerEvent: {}
+[9.487049] (my_package) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable my_node\x1b[0m\n'}
+[9.498252] (-) TimerEvent: {}
+[9.603017] (-) TimerEvent: {}
+[9.706947] (-) TimerEvent: {}
+[9.807212] (-) TimerEvent: {}
+[9.888105] (my_package) StdoutLine: {'line': b'[100%] Built target my_node\n'}
+[9.897905] (my_package) CommandEnded: {'returncode': 0}
+[9.907435] (-) TimerEvent: {}
+[9.926664] (my_package) JobProgress: {'identifier': 'my_package', 'progress': 'install'}
+[9.935430] (my_package) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package'], 'cwd': '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'chris'), ('XDG_SESSION_TYPE', 'wayland'), ('GIT_ASKPASS', '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/chris'), ('CHROME_DESKTOP', 'code-url-handler.desktop'), ('OLDPWD', '/home/chris/Desktop/EKF-SLAM'), ('TERM_PROGRAM_VERSION', '1.85.2'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('VSCODE_GIT_ASKPASS_MAIN', '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/usr/share/code/code'), ('MANAGERPID', '1534'), ('SYSTEMD_EXEC_PID', '1709'), ('IM_CONFIG_CHECK_ENV', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '33211'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/chris/Desktop/EKF-SLAM/ros_workspace/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'chris'), ('JOURNAL_STREAM', '8:31820'), ('_', '/home/chris/.local/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'chris'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/chris/.local/bin:/home/chris/.local/bin:/home/chris/.local/bin:/opt/ros/humble/bin:/home/chris/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/macubuntu:@/tmp/.ICE-unix/1689,unix/macubuntu:/tmp/.ICE-unix/1689'), ('INVOCATION_ID', '7290760dfa344b1897c6adcb1746763b'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'Unity'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.V1VGH2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/run/user/1000/vscode-git-44ed7893b2.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package:/opt/ros/humble'), ('ORIGINAL_XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', '--ms-enable-electron-run-as-node'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package:/opt/ros/humble')]), 'shell': False}
+[9.941710] (my_package) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[9.941980] (my_package) StdoutLine: {'line': b'-- Installing: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/my_package/my_node\n'}
+[9.946520] (my_package) StdoutLine: {'line': b'-- Set runtime path of "/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/my_package/my_node" to ""\n'}
+[9.946849] (my_package) StdoutLine: {'line': b'-- Installing: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/my_package/velocity_publisher\n'}
+[9.948182] (my_package) StdoutLine: {'line': b'-- Set runtime path of "/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/my_package/velocity_publisher" to ""\n'}
+[9.948441] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/ament_index/resource_index/package_run_dependencies/my_package\n'}
+[9.948480] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/ament_index/resource_index/parent_prefix_path/my_package\n'}
+[9.948516] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/environment/ament_prefix_path.sh\n'}
+[9.948550] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/environment/ament_prefix_path.dsv\n'}
+[9.948592] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/environment/path.sh\n'}
+[9.948623] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/environment/path.dsv\n'}
+[9.948667] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/local_setup.bash\n'}
+[9.948697] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/local_setup.sh\n'}
+[9.948729] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/local_setup.zsh\n'}
+[9.948759] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/local_setup.dsv\n'}
+[9.948789] (my_package) StdoutLine: {'line': b'-- Installing: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.dsv\n'}
+[9.948819] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/ament_index/resource_index/packages/my_package\n'}
+[9.948977] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/cmake/my_packageConfig.cmake\n'}
+[9.949033] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/cmake/my_packageConfig-version.cmake\n'}
+[9.949073] (my_package) StdoutLine: {'line': b'-- Up-to-date: /home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.xml\n'}
+[9.951969] (my_package) CommandEnded: {'returncode': 0}
+[10.008729] (-) TimerEvent: {}
+[10.045592] (my_package) JobEnded: {'identifier': 'my_package', 'rc': 0}
+[10.047593] (-) EventReactorShutdown: {}

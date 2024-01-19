@@ -1,0 +1,17 @@
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/my_package/my_node
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/my_package/velocity_publisher
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/ament_index/resource_index/package_run_dependencies/my_package
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/ament_index/resource_index/parent_prefix_path/my_package
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/environment/ament_prefix_path.sh
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/environment/ament_prefix_path.dsv
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/environment/path.sh
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/environment/path.dsv
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/local_setup.bash
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/local_setup.sh
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/local_setup.zsh
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/local_setup.dsv
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.dsv
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/ament_index/resource_index/packages/my_package
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/cmake/my_packageConfig.cmake
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/cmake/my_packageConfig-version.cmake
+/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.xml

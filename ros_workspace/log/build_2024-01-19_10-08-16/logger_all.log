@@ -1,0 +1,136 @@
+[0.466s] DEBUG:colcon:Command line arguments: ['/home/chris/.local/bin/colcon', 'build']
+[0.466s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=8, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0xffff9e7c51b0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffff9eae5bd0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffff9eae5bd0>>)
+[0.490s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.490s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.490s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.490s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.490s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.490s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.490s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/chris/Desktop/EKF-SLAM/ros_workspace'
+[0.490s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.491s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.491s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.491s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.491s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.491s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.491s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.491s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.491s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.496s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.496s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.496s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_package) by extensions ['ignore', 'ignore_ament_install']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_package) by extension 'ignore'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_package) by extension 'ignore_ament_install'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_package) by extensions ['colcon_pkg']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_package) by extension 'colcon_pkg'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_package) by extensions ['colcon_meta']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_package) by extension 'colcon_meta'
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_package) by extensions ['ros']
+[0.497s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_package) by extension 'ros'
+[0.499s] DEBUG:colcon.colcon_core.package_identification:Package 'src/my_package' with type 'ros.ament_cmake' and name 'my_package'
+[0.499s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.499s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.499s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.499s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.499s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.535s] Level 5:colcon.colcon_core.verb:set package 'my_package' build argument 'cmake_args' from command line to 'None'
+[0.535s] Level 5:colcon.colcon_core.verb:set package 'my_package' build argument 'cmake_target' from command line to 'None'
+[0.535s] Level 5:colcon.colcon_core.verb:set package 'my_package' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.535s] Level 5:colcon.colcon_core.verb:set package 'my_package' build argument 'cmake_clean_cache' from command line to 'False'
+[0.535s] Level 5:colcon.colcon_core.verb:set package 'my_package' build argument 'cmake_clean_first' from command line to 'False'
+[0.535s] Level 5:colcon.colcon_core.verb:set package 'my_package' build argument 'cmake_force_configure' from command line to 'False'
+[0.535s] Level 5:colcon.colcon_core.verb:set package 'my_package' build argument 'ament_cmake_args' from command line to 'None'
+[0.535s] Level 5:colcon.colcon_core.verb:set package 'my_package' build argument 'catkin_cmake_args' from command line to 'None'
+[0.535s] Level 5:colcon.colcon_core.verb:set package 'my_package' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.536s] DEBUG:colcon.colcon_core.verb:Building package 'my_package' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package', 'merge_install': False, 'path': '/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package', 'symlink_install': False, 'test_result_base': None}
+[0.542s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.549s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.549s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package' with build type 'ament_cmake'
+[0.549s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/chris/Desktop/EKF-SLAM/ros_workspace/src/my_package'
+[0.557s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.557s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.557s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.584s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package -- -j8 -l8
+[7.072s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package -- -j8 -l8
+[7.100s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package
+[7.111s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(my_package)
+[7.111s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/chris/Desktop/EKF-SLAM/ros_workspace/build/my_package
+[7.119s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package' for CMake module files
+[7.120s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package' for CMake config files
+[7.120s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_package', 'cmake_prefix_path')
+[7.127s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/hook/cmake_prefix_path.ps1'
+[7.127s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/hook/cmake_prefix_path.dsv'
+[7.128s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/hook/cmake_prefix_path.sh'
+[7.128s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib'
+[7.128s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/bin'
+[7.128s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/pkgconfig/my_package.pc'
+[7.129s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/python3.10/site-packages'
+[7.129s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/bin'
+[7.137s] INFO:colcon.colcon_core.shell:Creating package script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.ps1'
+[7.138s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.dsv'
+[7.138s] INFO:colcon.colcon_core.shell:Creating package script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.sh'
+[7.139s] INFO:colcon.colcon_core.shell:Creating package script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.bash'
+[7.140s] INFO:colcon.colcon_core.shell:Creating package script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.zsh'
+[7.142s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/colcon-core/packages/my_package)
+[7.176s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(my_package)
+[7.183s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package' for CMake module files
+[7.184s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package' for CMake config files
+[7.184s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_package', 'cmake_prefix_path')
+[7.197s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/hook/cmake_prefix_path.ps1'
+[7.197s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/hook/cmake_prefix_path.dsv'
+[7.198s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/hook/cmake_prefix_path.sh'
+[7.198s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib'
+[7.198s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/bin'
+[7.198s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/pkgconfig/my_package.pc'
+[7.199s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/lib/python3.10/site-packages'
+[7.199s] Level 1:colcon.colcon_core.environment:checking '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/bin'
+[7.206s] INFO:colcon.colcon_core.shell:Creating package script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.ps1'
+[7.206s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.dsv'
+[7.207s] INFO:colcon.colcon_core.shell:Creating package script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.sh'
+[7.207s] INFO:colcon.colcon_core.shell:Creating package script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.bash'
+[7.208s] INFO:colcon.colcon_core.shell:Creating package script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/my_package/package.zsh'
+[7.208s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/chris/Desktop/EKF-SLAM/ros_workspace/install/my_package/share/colcon-core/packages/my_package)
+[7.209s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[7.209s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[7.209s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[7.209s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[7.220s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[7.220s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[7.220s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[7.248s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[7.284s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/local_setup.ps1'
+[7.285s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/_local_setup_util_ps1.py'
+[7.286s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/setup.ps1'
+[7.296s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/local_setup.sh'
+[7.300s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/_local_setup_util_sh.py'
+[7.301s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/setup.sh'
+[7.311s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/local_setup.bash'
+[7.311s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/setup.bash'
+[7.319s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/local_setup.zsh'
+[7.319s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/chris/Desktop/EKF-SLAM/ros_workspace/install/setup.zsh'
