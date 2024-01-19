@@ -1,6 +1,0 @@
-Invoking command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/chris/Desktop/EKF-SLAM/ros_workspace/src/slam -DCMAKE_INSTALL_PREFIX=/home/chris/Desktop/EKF-SLAM/ros_workspace/install/slam
-Invoked command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/chris/Desktop/EKF-SLAM/ros_workspace/src/slam -DCMAKE_INSTALL_PREFIX=/home/chris/Desktop/EKF-SLAM/ros_workspace/install/slam
-Invoking command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam -- -j8 -l8
-Invoked command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam -- -j8 -l8
-Invoking command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam
-Invoked command in '/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam
