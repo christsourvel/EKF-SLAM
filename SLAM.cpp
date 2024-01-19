@@ -1,5 +1,6 @@
 #include <iostream>
-#include <eigen3/Eigen/Dense>
+//#include <Eigen/Dense>
+#include "/Users/christos/Documents/headers/Eigen/Dense"
 #include <fstream>
 
 using namespace Eigen;
