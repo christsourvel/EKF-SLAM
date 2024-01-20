@@ -53,7 +53,8 @@ public:
     while(velocityFile >> globalIndexVelocity &&
           perceptionFile >> globalIndexPerception)
     {
-        //std::cout<<globalIndexVelocity<<" goes with: "<<globalIndexPerception<<std::endl;
+        if(globalIndexVelocity != globalIndexPerception){continue;}
+        std::cout<<globalIndexVelocity<<" Velocity goes with Perception: "<<globalIndexPerception<<std::endl;
         // Read velocity from file
         VectorXd velocity(3);
         for (int i = 0; i < 3; ++i)
@@ -88,7 +89,7 @@ public:
         updateStep(state_vector, Sigma, Rt);
 
         // Estimated State
-        std::cout << "Step: " << step_cnt << ", Estimated State: " << state_vector.transpose() << std::endl;
+        //std::cout << "Step: " << step_cnt << ", Estimated State: " << state_vector.transpose() << std::endl;
         step_cnt++;
     }
     cout<<"THATS ALL FOLKS\n";
