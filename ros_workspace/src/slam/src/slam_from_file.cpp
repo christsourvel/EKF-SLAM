@@ -10,6 +10,8 @@
 using namespace Eigen;
 using namespace std;
 
+bool mapping = true;
+
 class SlamNode : public rclcpp::Node {
 public:
     SlamNode() : Node("Slam_node") {
@@ -179,11 +181,13 @@ void predictionStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& vel
     state_vector.head(3) = kinematic_update(state_vector.head(3), velocity);
 
     // Covariance Prediction
-    Sigma = covariance_update(Sigma, Gt, state_vector.size());
+    if(mapping){Sigma = covariance_update(Sigma, Gt, state_vector.size());}
+    else{Sigma = (Gt * Sigma * Gt.transpose()) + Q;}
 }
 
 
-vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<float> range, vector<float> bearing) 
+vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<float> range,
+                                        vector<float> bearing, vector<float> unmatched) 
 {
     double x = state_vector(0);
     double y = state_vector(1);
@@ -209,38 +213,39 @@ vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<flo
             best_match = i;
           }
         }
-        if(best_match>=0){proccessing.push_back({best_match, j});
+        if(best_match>=0){proccessing.push_back({best_match, j});}
+        else{unmatched.push_back(j);}
     }
     return proccessing;
 }
 
 // Function to add new landmarks
 void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, vector<float> range,
-                       vector<float> bearing, int unmatched)
+                       vector<float> bearing, vector<float> unmatched)
 {
     double x = state_vector(0);
     double y = state_vector(1);
     double theta = state_vector(2);
     
-    for(int i = 0; i < unmatched; ++i)
+    for(int i = 0; i < unmatched.size(); ++i)
     {
-        double x_land = x + range * cos(theta + bearing);
-        double y_land = y + range * sin(theta + bearing);
+        double x_land = x + range[unmatched[i]] * cos(theta + bearing[unmatched[i]]);
+        double y_land = y + range[unmatched[i]] * sin(theta + bearing[unmatched[i]]);
         landmark_distances.push_back(std::make_pair(x_land, y_land));
 
         VectorXd new_state_vector(state_vector.size() + 2);
         new_state_vector << state_vector, x_land, y_land;
 
         MatrixXd Hu_inv(2,3);
-            Hu_inv << 1, 0, -1 * range * sin(theta + bearing),
-                      0, 1, range * cos(theta + bearing);
+            Hu_inv << 1, 0, -1 * range[unmatched[i]] * sin(theta + bearing[unmatched[i]]),
+                      0, 1, range[unmatched[i]] * cos(theta + bearing[unmatched[i]]);
 
         MatrixXd H_inv = MatrixXd::Zero(2,state_vector.size());
         H_inv.block(0, 0, 2, 3) = Hu_inv;
 
         MatrixXd Hi_inv(2,2);
-            Hi_inv << cos(theta + bearing), -1 * range * sin(theta + bearing),
-                      sin(theta + bearing), range * cos(theta + bearing);
+            Hi_inv << cos(theta + bearing[unmatched[i]]), -1 * range[unmatched[i]] * sin(theta + bearing[unmatched[i]]),
+                      sin(theta + bearing[unmatched[i]]), range[unmatched[i]] * cos(theta + bearing[unmatched[i]]);
 
         Matrix2d Rt;                              
         Rt << 0.1, 0,
@@ -267,30 +272,24 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R)
     double theta = state_vector(2);
     vector<float> range = measurements.range_list;
     vector<float> bearing = measurements.theta.list;
+    vector<float> unmatched;
     
-    //(matched_landmark,measurement_index)
-    vector<pair<int, int>> matched = data_association(state_vector, range, bearing);
-
-
-        add_new_landmarks(state_vector, Sigma, range, bearing, unmatched_num);  
+    // 1: matched_landmark, 2: measurement_index
+    vector<pair<int, int>> matched = data_association(state_vector, range, bearing, unmatched);
     
+    // add unmatched measurements on mapping mode
+    if(mapping){
+        add_new_landmarks(state_vector, Sigma, range, bearing, unmatched);
+        MatrixXd Ht = MatrixXd::Zero(2 * matched.size(), state_vector.size());
+        MatrixXd Dzt = MatrixXd::Zero(2 * matched.size(), 1);
+        MatrixXd Rt = MatrixXd::Zero(2 * matched.size(), 2 * matched.size());
+        Rt.diagonal().array() = 0.1;
+    }
 
-    // Perception measurements
-    float range = measurements.range_list[0];
-    float bearing = measurements.theta_list[0];
-    MatrixXd zt(2,1);
-        zt << range, 
-              bearing;
 
-    MatrixXd Ht = MatrixXd::Zero(2 * measurements_num, state_vector.size());              //CHANGE
-    MatrixXd Dzt = MatrixXd::Zero(2 * measurements_num, 1);
-    MatrixXd Rt = MatrixXd::Zero(2 * measurements_num, 2 * measurements_num);
-    Rt.diagonal().array() = 0.1;
-
-    int matched_landmarks = 1;
-    for(int i=0; i<matched_landmarks; ++i)
+    for(int i=0; i<matched.size(); ++i)
     {
-            double x_land = x + range * cos(bearing + theta);
+            double x_land = x + range[] * cos(bearing + theta);
             double y_land = y + range * sin(bearing + theta);
             double dx = x_land - x;
             double dy = y_land - y;
@@ -307,11 +306,12 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R)
                 zt_exp << q_sqrt,
                      atan2(dy,dx);
             
-            Dzt.block(2 * matched_landmarks, 0, 2, 1) = zt - zt_exp;
             
             MatrixXd Htu(2,3);
                 Htu << - q_sqrt * dx, - q_sqrt * dy, 0,
                             dy, - dx, - q; 
+
+           if(mapping){ Dzt.block(2 * matched_landmarks, 0, 2, 1) = zt - zt_exp;
 
             MatrixXd Htj(2,2);
                 Htj << q_sqrt * dx, q_sqrt * dy,
@@ -319,12 +319,17 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R)
             
             Ht.block(2 * matched_landmarks, 0, 2, 3) = Htu;
             Ht.block(2 * matched_landmarks, 2 * i + 3, 2, 2) = Htj;
+           }
+           else{
+                MatrixXd Ht(2,3) = Htu;
+           }
     }
 
         // KALMAN GAIN
         MatrixXd Kt = Sigma * Ht.transpose() * ((Ht * Sigma * Ht.transpose()) + Rt).inverse();
         
         // FINAL STATE 
+        if(!mapping){ MatrixXd Dzt = zt - zt.exp;}
         state_vector = state_vector + Kt * Dzt; // or K * `Δzt
 
         // FINAL COV MATRIX
