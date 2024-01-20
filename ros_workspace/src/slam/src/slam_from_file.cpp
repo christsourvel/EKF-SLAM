@@ -53,7 +53,7 @@ public:
     while(velocityFile >> globalIndexVelocity &&
           perceptionFile >> globalIndexPerception)
     {
-        std::cout<<globalIndexVelocity<<" goes with: "<<globalIndexPerception<<std::endl;
+        //std::cout<<globalIndexVelocity<<" goes with: "<<globalIndexPerception<<std::endl;
         // Read velocity from file
         VectorXd velocity(3);
         for (int i = 0; i < 3; ++i)
@@ -69,7 +69,7 @@ public:
             }
         }
         // JUST FOR TESTING
-        if(globalIndexVelocity >= 500){std::cout<<"Enough!"; break;}
+        //if(globalIndexVelocity >= 500){std::cout<<"Enough!"; break;}
 
         // Read perception measurements from file
         readList(perceptionFile, measurements.class_list);
@@ -88,9 +88,10 @@ public:
         updateStep(state_vector, Sigma, Rt);
 
         // Estimated State
-       // std::cout << "Step: " << step_cnt << ", Estimated State: " << state_vector.transpose() << std::endl;
+        std::cout << "Step: " << step_cnt << ", Estimated State: " << state_vector.transpose() << std::endl;
         step_cnt++;
     }
+    cout<<"THATS ALL FOLKS\n";
   }
 
 
@@ -187,13 +188,13 @@ void predictionStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& vel
 
 
 vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<double> range,
-                                        vector<double> bearing, vector<double> unmatched) 
+                                        vector<double> bearing, vector<int> unmatched) 
 {
     double x = state_vector(0);
     double y = state_vector(1);
     double theta = state_vector(2);
     double association_distance_threshold = 1.9;
-    vector<int> proccessing;
+    vector<pair<int, int>> proccessing;
 
     for(int j = 0; j < range.size(); ++j){
         double least_distance_square = std::pow(association_distance_threshold, 2);
@@ -213,7 +214,7 @@ vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<dou
             best_match = i;
           }
         }
-        if(best_match>=0){proccessing.push_back({best_match, j});}
+        if(best_match>=0){proccessing.push_back(std::make_pair(best_match, j));}
         else{unmatched.push_back(j);}
     }
     return proccessing;
@@ -221,7 +222,7 @@ vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<dou
 
 // Function to add new landmarks
 void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, vector<double> range,
-                       vector<double> bearing, vector<double> unmatched)
+                       vector<double> bearing, vector<int> unmatched)
 {
     double x = state_vector(0);
     double y = state_vector(1);
@@ -271,31 +272,29 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R)
     double y = state_vector(1);
     double theta = state_vector(2);
     vector<double> range = measurements.range_list;
-    vector<double> bearing = measurements.theta.list;
-    vector<double> unmatched;
+    vector<double> bearing = measurements.theta_list;
+    vector<int> unmatched;
     
     // 1: matched_landmark, 2: measurement_index
     vector<pair<int, int>> matched = data_association(state_vector, range, bearing, unmatched);
     
     // add unmatched measurements on mapping mode
-    if(mapping){
-        add_new_landmarks(state_vector, Sigma, range, bearing, unmatched);
-        MatrixXd Ht = MatrixXd::Zero(2 * matched.size(), state_vector.size());
-        MatrixXd Dzt = MatrixXd::Zero(2 * matched.size(), 1);
-        MatrixXd Rt = MatrixXd::Zero(2 * matched.size(), 2 * matched.size());
-        Rt.diagonal().array() = 0.1;
-    }
-
+    if(mapping){add_new_landmarks(state_vector, Sigma, range, bearing, unmatched);}
+        
+    MatrixXd Ht = MatrixXd::Zero(2 * matched.size(), state_vector.size());
+    MatrixXd Dzt = MatrixXd::Zero(2 * matched.size(), 1);
+    MatrixXd Rt = MatrixXd::Zero(2 * matched.size(), 2 * matched.size());
+    Rt.diagonal().array() = 0.1;
 
     for(int i=0; i<matched.size(); ++i)
     {
             // Actual observation
             MatrixXd zt(2,1);
                 zt << range[matched[i].second],
-                      theta[matched[i].second];
+                      bearing[matched[i].second];
             
-            double x_land = state_vector(2 * matched[i].first + 2) 
-            double y_land = state_vector(2 * matched[i].first + 3)
+            double x_land = state_vector(2 * matched[i].first + 2);
+            double y_land = state_vector(2 * matched[i].first + 3);
             double dx = x_land - x;
             double dy = y_land - y;
 
@@ -316,17 +315,18 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R)
                 Htu << - q_sqrt * dx, - q_sqrt * dy, 0,
                             dy, - dx, - q; 
 
-           if(mapping){ Dzt.block(2 * matched_landmarks, 0, 2, 1) = zt - zt_exp;
-
+           if(mapping){ 
+            Dzt.block(2 * matched[i].first, 0, 2, 1) = zt - zt_exp;
             MatrixXd Htj(2,2);
                 Htj << q_sqrt * dx, q_sqrt * dy,
                         - dy, dx;
             
-            Ht.block(2 * matched_landmarks, 0, 2, 3) = Htu;
-            Ht.block(2 * matched_landmarks, 2 * i + 3, 2, 2) = Htj;
+            Ht.block(2 * matched[i].first, 0, 2, 3) = Htu;
+            Ht.block(2 * matched[i].first, 2 * i + 3, 2, 2) = Htj;
            }
            else{
-                MatrixXd Ht(2,3) = Htu;
+                MatrixXd Ht = Htu;
+                MatrixXd Dzt = zt - zt_exp;
            }
     }
 
@@ -334,7 +334,6 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R)
         MatrixXd Kt = Sigma * Ht.transpose() * ((Ht * Sigma * Ht.transpose()) + Rt).inverse();
         
         // FINAL STATE 
-        if(!mapping){ MatrixXd Dzt = zt - zt.exp;}
         state_vector = state_vector + Kt * Dzt; // or K * `Δzt
 
         // FINAL COV MATRIX
