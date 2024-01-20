@@ -3,13 +3,8 @@
 #include "rclcpp/rclcpp.hpp"
 #include <Eigen/Dense>
 
-// Subscribe messages
-#include <geometry_msgs/msg/twist.hpp>
-#include <slam/msg/Perception2Slam.hpp>
-
 // Publish message
 #include "slam/msg/PoseMsg.hpp"
-
 
 using namespace Eigen;
 using namespace std;
@@ -17,12 +12,6 @@ using namespace std;
 class SlamNode : public rclcpp::Node {
 public:
     SlamNode() : Node("Slam_node") {
-        velocity_subscriber_ = this->create_subscription<geometry_msgs::msg::Twist>(
-            "velocity_topic", 10, std::bind(&SlamNode::velocityCallback, this, std::placeholders::_1));
-
-        perception_subscriber_ = this->create_subscription<slam::msg::Perception2Slam>(
-            "perception_topic", 10, std::bind(&SlamNode::PerceptionCallback, this, std::placeholders::_1));
-
         state_publisher_ = this->create_publisher<slam::msg::PoseMsg>(
             "state_topic", 10);    
     }
@@ -46,38 +35,65 @@ public:
         Rt << 0.1, 0,
               0, 0.1;
 
-         // Infinite loop - runs as long as the node is active
-    while (rclcpp::ok()) {
-        // Process any incoming messages
-        rclcpp::spin_some(shared_from_this());
+       std::ifstream velocityFile("good_velocityLog.txt");
+       std::ifstream perceptionFile("good_perceptionLog.txt");
 
-        // Use the updated velocity
+        if (!velocityFile.is_open() || !perceptionFile.is_open()) {
+            std::cerr << "Error opening input files." << std::endl;
+            return 1;
+        }
+
+    int step_cnt = 0;
+    uint32_t globalIndexVelocity;
+    uint32_t globalIndexPerception;
+    std::string line;
+    std::vector<int32_t> class_list;
+    std::vector<float> theta_list;
+    std::vector<float> range_list;
+    
+    while(velocityFile >> globalIndexVelocity &&
+          perceptionFile >> globalIndexPerception)
+    {
+        //std::cout<<globalIndexVelocity<<" goes with: "<<globalIndexPerception<<std::endl;
+        // Read velocity from file
         VectorXd velocity(3);
-        velocity << current_velocity_[0], current_velocity_[1], current_velocity_[2];
+        for (int i = 0; i < 3; ++i)
+        {
+            velocityFile >> velocity(i);
+        }
+
+        // Read variance matrix from velocity file
+        Matrix<double, 3, 3> varianceMatrixVelocity;
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                velocityFile >> varianceMatrixVelocity(i, j);
+            }
+        }
+        // JUST FOR TESTING
+        if(globalIndexVelocity >= 500){std::cout<<"Enough!"; break;}
+
+        // Read perception measurements from file
+        readList(perceptionFile, class_list);
+        readList(perceptionFile, theta_list);
+        readList(perceptionFile, range_list);
+
 
         VectorXd measurements(2);
-        measurements << current_perception_[3], current_perception_[2];
+            measurements << range_list[0], theta_list[0];
 
-
+        // Prediction step
         predictionStep(state_vector, Sigma, velocity, Q);
-        updateStep(state_vector, Sigma, measurements, Rt);
 
-        // Create a Pose message
-        slam::msg::PoseMsg pose_msg;
-        pose_msg.x = state_vector(0); // x position
-        pose_msg.y = state_vector(1); // y position
-        pose_msg.theta = state_vector(2); // theta orientation
+        // Update step
+        updateStep(state_vector, Sigma, measurements, R);
 
-        // Publish the Pose message
-        state_publisher_->publish(pose_msg);
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
-
-        cout << "State Vector: " << state_vector.transpose() << endl;
+        // Estimated State
+       // std::cout << "Step: " << step_cnt << ", Estimated State: " << state_vector.transpose() << std::endl;
+        step_cnt++;
     }
-}
-    
+  }
 
+    
 VectorXd kinematic_update(const VectorXd& pose, const VectorXd& velocity) 
 {
     double dt = 0.1;  
@@ -318,36 +334,6 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& measure
 
 private:
     vector<pair<double, double>> landmark_distances;
-    Vector3d current_velocity_;
-    
-     struct PerceptionData {
-        uint32_t global_index;
-        std::vector<int32_t> class_list;
-        std::vector<float> theta_list;
-        std::vector<float> range_list;
-    };
-
-    PerceptionData current_perception_;
-    
-    void velocityCallback(const geometry_msgs::msg::Twist::SharedPtr msg) {
-    
-        current_velocity_[0] = msg->linear.x;
-        current_velocity_[1] = msg->linear.y;
-        current_velocity_[2] = msg->angular.z;
-    }
-
-    void PerceptionCallback(const slam::msg::Perception2Slam msg) {
-        
-    current_perception_.global_index = msg->global_index;
-
-    current_perception_.class_list = msg->class_list;
-    current_perception_.theta_list = msg->theta_list;
-    current_perception_.range_list = msg->range_list;
-    }
-
-    rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr velocity_subscriber_;
-    rclcpp::Subscription<slam::msg::Perception2Slam>::SharedPtr perception_subscriber_;
-    rclcpp::Publisher<slam::msg::PoseMsg>::SharedPtr state_publisher_;
 };
 
 
@@ -360,28 +346,3 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-
-
-
-/*
-// random velocity "measurements"
-VectorXd generateRandomMotion() 
-{
-    VectorXd velocity(3);
-    velocity << 1.0 + 0.2 * rand() / RAND_MAX,   // v_x
-                1.0 + 0.2 * rand() / RAND_MAX,   // v_y
-                0.1 * (2.0 * rand() / RAND_MAX - 1.0);  // omega
-
-    return velocity;
-}
-
-// random range - bearing "measurements"
-VectorXd generateRandomMeasurement() 
-{
-    VectorXd measurement(2);
-        measurement << 5.0 * rand() / RAND_MAX,
-                       5.0 * (2.0 * rand() / RAND_MAX - 1.0);
-    return measurement;
-}
-
-*/
