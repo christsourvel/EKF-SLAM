@@ -617,9 +617,7 @@ CMakeFiles/localization.dir/clean:
 # Target rules for target CMakeFiles/slam_handler.dir
 
 # All Build rule for target.
-CMakeFiles/slam_handler.dir/all: CMakeFiles/slam.dir/all
-CMakeFiles/slam_handler.dir/all: CMakeFiles/slam__cpp.dir/all
-CMakeFiles/slam_handler.dir/all: CMakeFiles/slam__rosidl_typesupport_cpp.dir/all
+CMakeFiles/slam_handler.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam_handler.dir/build.make CMakeFiles/slam_handler.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam_handler.dir/build.make CMakeFiles/slam_handler.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles --progress-num=42,43 "Built target slam_handler"
@@ -627,7 +625,7 @@ CMakeFiles/slam_handler.dir/all: CMakeFiles/slam__rosidl_typesupport_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/slam_handler.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles 31
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/slam_handler.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles 0
 .PHONY : CMakeFiles/slam_handler.dir/rule

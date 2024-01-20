@@ -35,7 +35,6 @@ target_include_directories(slam_handler PUBLIC
   $<INSTALL_INTERFACE:include>)
 target_compile_features(slam_handler PUBLIC c_std_99 cxx_std_17)
 ament_target_dependencies(slam_handler rclcpp Eigen3 geometry_msgs)
-rosidl_target_interfaces(slam_handler ${PROJECT_NAME} "rosidl_typesupport_cpp")  # Link with custom message
 
 # Add velocity_publisher executable
 add_executable(velocity_publisher src/velocity_publisher.cpp)
