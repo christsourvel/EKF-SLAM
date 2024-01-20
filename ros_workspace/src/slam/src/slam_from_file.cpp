@@ -186,8 +186,8 @@ void predictionStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& vel
 }
 
 
-vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<float> range,
-                                        vector<float> bearing, vector<float> unmatched) 
+vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<double> range,
+                                        vector<double> bearing, vector<double> unmatched) 
 {
     double x = state_vector(0);
     double y = state_vector(1);
@@ -220,8 +220,8 @@ vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<flo
 }
 
 // Function to add new landmarks
-void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, vector<float> range,
-                       vector<float> bearing, vector<float> unmatched)
+void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, vector<double> range,
+                       vector<double> bearing, vector<double> unmatched)
 {
     double x = state_vector(0);
     double y = state_vector(1);
@@ -270,9 +270,9 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R)
     double x = state_vector(0);
     double y = state_vector(1);
     double theta = state_vector(2);
-    vector<float> range = measurements.range_list;
-    vector<float> bearing = measurements.theta.list;
-    vector<float> unmatched;
+    vector<double> range = measurements.range_list;
+    vector<double> bearing = measurements.theta.list;
+    vector<double> unmatched;
     
     // 1: matched_landmark, 2: measurement_index
     vector<pair<int, int>> matched = data_association(state_vector, range, bearing, unmatched);
@@ -289,8 +289,13 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R)
 
     for(int i=0; i<matched.size(); ++i)
     {
-            double x_land = x + range[] * cos(bearing + theta);
-            double y_land = y + range * sin(bearing + theta);
+            // Actual observation
+            MatrixXd zt(2,1);
+                zt << range[matched[i].second],
+                      theta[matched[i].second];
+            
+            double x_land = state_vector(2 * matched[i].first + 2) 
+            double y_land = state_vector(2 * matched[i].first + 3)
             double dx = x_land - x;
             double dy = y_land - y;
 
@@ -352,8 +357,8 @@ private:
     vector<pair<double, double>> landmark_distances;
     struct Measurements {
         std::vector<int32_t> class_list;
-        std::vector<float> theta_list;
-        std::vector<float> range_list;
+        std::vector<double> theta_list;
+        std::vector<double> range_list;
     };
 
     Measurements measurements; 
