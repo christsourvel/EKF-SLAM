@@ -419,6 +419,19 @@ slam_handler/fast:
 .PHONY : slam_handler/fast
 
 #=============================================================================
+# Target rules for targets named slam_from_file
+
+# Build rule for target.
+slam_from_file: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 slam_from_file
+.PHONY : slam_from_file
+
+# fast build rule for target.
+slam_from_file/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam_from_file.dir/build.make CMakeFiles/slam_from_file.dir/build
+.PHONY : slam_from_file/fast
+
+#=============================================================================
 # Target rules for targets named velocity_publisher
 
 # Build rule for target.
@@ -924,6 +937,30 @@ src/localization.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/localization.dir/build.make CMakeFiles/localization.dir/src/localization.cpp.s
 .PHONY : src/localization.cpp.s
 
+src/slam_from_file.o: src/slam_from_file.cpp.o
+.PHONY : src/slam_from_file.o
+
+# target to build an object file
+src/slam_from_file.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam_from_file.dir/build.make CMakeFiles/slam_from_file.dir/src/slam_from_file.cpp.o
+.PHONY : src/slam_from_file.cpp.o
+
+src/slam_from_file.i: src/slam_from_file.cpp.i
+.PHONY : src/slam_from_file.i
+
+# target to preprocess a source file
+src/slam_from_file.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam_from_file.dir/build.make CMakeFiles/slam_from_file.dir/src/slam_from_file.cpp.i
+.PHONY : src/slam_from_file.cpp.i
+
+src/slam_from_file.s: src/slam_from_file.cpp.s
+.PHONY : src/slam_from_file.s
+
+# target to generate assembly for a file
+src/slam_from_file.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/slam_from_file.dir/build.make CMakeFiles/slam_from_file.dir/src/slam_from_file.cpp.s
+.PHONY : src/slam_from_file.cpp.s
+
 src/slam_handler.o: src/slam_handler.cpp.o
 .PHONY : src/slam_handler.o
 
@@ -1004,6 +1041,7 @@ help:
 	@echo "... slam__rosidl_typesupport_introspection_c"
 	@echo "... slam__rosidl_typesupport_introspection_c__pyext"
 	@echo "... slam__rosidl_typesupport_introspection_cpp"
+	@echo "... slam_from_file"
 	@echo "... slam_handler"
 	@echo "... velocity_publisher"
 	@echo "... rosidl_generator_c/slam/msg/detail/perception2_slam__functions.o"
@@ -1066,6 +1104,9 @@ help:
 	@echo "... src/localization.o"
 	@echo "... src/localization.i"
 	@echo "... src/localization.s"
+	@echo "... src/slam_from_file.o"
+	@echo "... src/slam_from_file.i"
+	@echo "... src/slam_from_file.s"
 	@echo "... src/slam_handler.o"
 	@echo "... src/slam_handler.i"
 	@echo "... src/slam_handler.s"

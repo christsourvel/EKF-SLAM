@@ -99,6 +99,7 @@ localization: /opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_fastrtps_
 localization: /opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_introspection_cpp.so
 localization: /opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_cpp.so
 localization: /opt/ros/humble/lib/libgeometry_msgs__rosidl_generator_py.so
+localization: libslam__rosidl_typesupport_cpp.so
 localization: /opt/ros/humble/lib/liblibstatistics_collector.so
 localization: /opt/ros/humble/lib/librcl.so
 localization: /opt/ros/humble/lib/librmw_implementation.so
@@ -148,7 +149,6 @@ localization: /opt/ros/humble/lib/librosidl_typesupport_introspection_cpp.so
 localization: /opt/ros/humble/lib/librosidl_typesupport_introspection_c.so
 localization: /opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_cpp.so
 localization: /opt/ros/humble/lib/libbuiltin_interfaces__rosidl_typesupport_cpp.so
-localization: /opt/ros/humble/lib/librosidl_typesupport_cpp.so
 localization: /opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_c.so
 localization: /opt/ros/humble/lib/libgeometry_msgs__rosidl_generator_c.so
 localization: /opt/ros/humble/lib/libstd_msgs__rosidl_generator_py.so
@@ -157,11 +157,12 @@ localization: /opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_c.so
 localization: /opt/ros/humble/lib/libbuiltin_interfaces__rosidl_typesupport_c.so
 localization: /opt/ros/humble/lib/libstd_msgs__rosidl_generator_c.so
 localization: /opt/ros/humble/lib/libbuiltin_interfaces__rosidl_generator_c.so
+localization: /usr/lib/aarch64-linux-gnu/libpython3.10.so
+localization: /opt/ros/humble/lib/librosidl_typesupport_cpp.so
 localization: /opt/ros/humble/lib/librosidl_typesupport_c.so
 localization: /opt/ros/humble/lib/librcpputils.so
 localization: /opt/ros/humble/lib/librosidl_runtime_c.so
 localization: /opt/ros/humble/lib/librcutils.so
-localization: /usr/lib/aarch64-linux-gnu/libpython3.10.so
 localization: CMakeFiles/localization.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable localization"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/localization.dir/link.txt --verbose=$(VERBOSE)

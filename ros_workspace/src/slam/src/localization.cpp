@@ -158,7 +158,7 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& measure
     double theta = state_vector(2);
     
     // Data association
-    data_association(state_vector, measurements);
+    if(!data_association(state_vector, measurements)){return;}
     
     // Perception measurements
     double range = measurements(0);

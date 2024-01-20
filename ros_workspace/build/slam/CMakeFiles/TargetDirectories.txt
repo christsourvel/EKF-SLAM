@@ -17,6 +17,7 @@
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/slam__rosidl_typesupport_c__pyext.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/localization.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/slam_handler.dir
+/home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/slam_from_file.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/velocity_publisher.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/test.dir
 /home/chris/Desktop/EKF-SLAM/ros_workspace/build/slam/CMakeFiles/edit_cache.dir

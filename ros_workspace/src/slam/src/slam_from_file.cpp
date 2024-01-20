@@ -1,10 +1,11 @@
 #include <iostream>
+#include <fstream>
 #include <memory>
 #include "rclcpp/rclcpp.hpp"
 #include <Eigen/Dense>
 
 // Publish message
-#include "slam/msg/PoseMsg.hpp"
+//#include "slam/msg/PoseMsg.hpp"
 
 using namespace Eigen;
 using namespace std;
@@ -12,8 +13,8 @@ using namespace std;
 class SlamNode : public rclcpp::Node {
 public:
     SlamNode() : Node("Slam_node") {
-        state_publisher_ = this->create_publisher<slam::msg::PoseMsg>(
-            "state_topic", 10);    
+       // state_publisher_ = this->create_publisher<slam::msg::PoseMsg>(
+       //     "state_topic", 10);    
     }
 
     void runSlamAlgorithm() {
@@ -35,26 +36,22 @@ public:
         Rt << 0.1, 0,
               0, 0.1;
 
-       std::ifstream velocityFile("good_velocityLog.txt");
-       std::ifstream perceptionFile("good_perceptionLog.txt");
+       std::ifstream velocityFile("/home/chris/Desktop/EKF-SLAM/testing/good_velocityLog.txt");
+       std::ifstream perceptionFile("/home/chris/Desktop/EKF-SLAM/testing/good_perceptionLog.txt");
 
         if (!velocityFile.is_open() || !perceptionFile.is_open()) {
             std::cerr << "Error opening input files." << std::endl;
-            return 1;
+            return;
         }
 
     int step_cnt = 0;
     uint32_t globalIndexVelocity;
     uint32_t globalIndexPerception;
-    std::string line;
-    std::vector<int32_t> class_list;
-    std::vector<float> theta_list;
-    std::vector<float> range_list;
     
     while(velocityFile >> globalIndexVelocity &&
           perceptionFile >> globalIndexPerception)
     {
-        //std::cout<<globalIndexVelocity<<" goes with: "<<globalIndexPerception<<std::endl;
+        std::cout<<globalIndexVelocity<<" goes with: "<<globalIndexPerception<<std::endl;
         // Read velocity from file
         VectorXd velocity(3);
         for (int i = 0; i < 3; ++i)
@@ -73,19 +70,20 @@ public:
         if(globalIndexVelocity >= 500){std::cout<<"Enough!"; break;}
 
         // Read perception measurements from file
-        readList(perceptionFile, class_list);
-        readList(perceptionFile, theta_list);
-        readList(perceptionFile, range_list);
+        readList(perceptionFile, measurements.class_list);
+        readList(perceptionFile, measurements.theta_list);
+        readList(perceptionFile, measurements.range_list);
 
-
-        VectorXd measurements(2);
-            measurements << range_list[0], theta_list[0];
+        if(measurements.theta_list.size() != measurements.range_list.size()){
+            cout<<" FUCKED UP TXT FORMAT!!!\n";
+            return;
+        }
 
         // Prediction step
         predictionStep(state_vector, Sigma, velocity, Q);
 
         // Update step
-        updateStep(state_vector, Sigma, measurements, R);
+        updateStep(state_vector, Sigma, Rt);
 
         // Estimated State
        // std::cout << "Step: " << step_cnt << ", Estimated State: " << state_vector.transpose() << std::endl;
@@ -93,7 +91,7 @@ public:
     }
   }
 
-    
+
 VectorXd kinematic_update(const VectorXd& pose, const VectorXd& velocity) 
 {
     double dt = 0.1;  
@@ -185,42 +183,44 @@ void predictionStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& vel
 }
 
 
-bool data_association(const VectorXd& state_vector, const VectorXd& measurements) 
+vector<pair<int, int>> data_association(const VectorXd& state_vector, vector<float> range, vector<float> bearing) 
 {
     double x = state_vector(0);
     double y = state_vector(1);
     double theta = state_vector(2);
-    double range = measurements(0);
-    double bearing = measurements(1);
+    double association_distance_threshold = 1.9;
+    vector<int> proccessing;
 
-    double x_land = x + range * cos(theta + bearing);
-    double y_land = y + range * sin(theta + bearing);
+    for(int j = 0; j < range.size(); ++j){
+        double least_distance_square = std::pow(association_distance_threshold, 2);
+        int best_match = -1;
+        double x_land = x + range[j] * cos(theta + bearing[j]);
+        double y_land = y + range[j] * sin(theta + bearing[j]);
 
-    double association_distance_threshold = 1.9; 
-    double least_distance_square = std::pow(association_distance_threshold, 2);
-
-    // Iterate through all of the cones in the current map
-    for (size_t i = 0; i < landmark_distances.size(); ++i) 
-    {
-        const auto& pair = landmark_distances[i];
-        double current_distance_square = std::pow(x_land - pair.first, 2) + std::pow(y_land - pair.second, 2);
-    
-        if(current_distance_square < least_distance_square) 
+        // Iterate through all of the cones in the current map
+        for (int i = 0; i < landmark_distances.size(); ++i) 
         {
-            return true;  
+          const auto& pair = landmark_distances[i];
+          double current_distance_square = std::pow(x_land - pair.first, 2) + std::pow(y_land - pair.second, 2);
+    
+         if(current_distance_square < least_distance_square) 
+          {
+            least_distance_square = current_distance_square; 
+            best_match = i;
+          }
         }
+        if(best_match>=0){proccessing.push_back({best_match, j});
     }
-    return false;  
+    return proccessing;
 }
 
 // Function to add new landmarks
-void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& measurements, int unmatched)
+void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, vector<float> range,
+                       vector<float> bearing, int unmatched)
 {
     double x = state_vector(0);
     double y = state_vector(1);
     double theta = state_vector(2);
-    double range = measurements(0);
-    double bearing = measurements(1);
     
     for(int i = 0; i < unmatched; ++i)
     {
@@ -260,24 +260,24 @@ void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& 
 }
 
 // UPDATE STEP
-void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& measurements, const MatrixXd& R) 
+void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R) 
 {
     double x = state_vector(0);
     double y = state_vector(1);
     double theta = state_vector(2);
+    vector<float> range = measurements.range_list;
+    vector<float> bearing = measurements.theta.list;
     
-    int measurements_num = 2;
-    int unmatched_num = 1;
+    //(matched_landmark,measurement_index)
+    vector<pair<int, int>> matched = data_association(state_vector, range, bearing);
 
-    // Initializing new landmarks
-    if (!data_association(state_vector, measurements))
-    {
-        add_new_landmarks(state_vector, Sigma, measurements, unmatched_num);
-    }
+
+        add_new_landmarks(state_vector, Sigma, range, bearing, unmatched_num);  
+    
 
     // Perception measurements
-    double range = measurements(0);
-    double bearing = measurements(1);
+    float range = measurements.range_list[0];
+    float bearing = measurements.theta_list[0];
     MatrixXd zt(2,1);
         zt << range, 
               bearing;
@@ -330,10 +330,28 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& measure
         // FINAL COV MATRIX
         Sigma = (MatrixXd::Identity(state_vector.size(), state_vector.size()) - Kt * Ht) * Sigma;
 }
- 
 
+// Function to read a list of values from a line and store them in a vector
+template<typename T>
+void readList(std::istream& input, std::vector<T>& output) {
+    std::string line;
+    std::getline(input >> std::ws, line);
+    std::istringstream stream(line);
+    T value;
+    while (stream >> value) {
+        output.push_back(value);
+    }
+}
+ 
 private:
     vector<pair<double, double>> landmark_distances;
+    struct Measurements {
+        std::vector<int32_t> class_list;
+        std::vector<float> theta_list;
+        std::vector<float> range_list;
+    };
+
+    Measurements measurements; 
 };
 
 
@@ -345,4 +363,6 @@ int main(int argc, char **argv) {
     rclcpp::shutdown();
     return 0;
 }
+
+
 
