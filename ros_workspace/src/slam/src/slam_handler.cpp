@@ -2,7 +2,7 @@
 #include <memory>
 #include "rclcpp/rclcpp.hpp"
 #include <Eigen/Dense>
-/*
+
 // Subscribe messages
 #include <geometry_msgs/msg/twist.hpp>
 #include <slam/msg/Perception2Slam.hpp>
@@ -350,7 +350,7 @@ private:
     rclcpp::Publisher<slam::msg::PoseMsg>::SharedPtr state_publisher_;
 };
 
-*/
+
 int main(int argc, char **argv) {
     rclcpp::init(argc, argv);
     //auto node = make_shared<SlamNode>();
