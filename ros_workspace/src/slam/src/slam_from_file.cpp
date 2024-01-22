@@ -38,61 +38,52 @@ public:
         Rt << 0.1, 0,
               0, 0.1;
 
-       std::ifstream velocityFile("/home/chris/Desktop/EKF-SLAM/testing/good_velocityLog.txt");
-       std::ifstream perceptionFile("/home/chris/Desktop/EKF-SLAM/testing/good_perceptionLog.txt");
+        velocityFile.open("/home/chris/Desktop/EKF-SLAM/testing/good_velocityLog.txt");
+        perceptionFile.open("/home/chris/Desktop/EKF-SLAM/testing/good_perceptionLog.txt");
 
         if (!velocityFile.is_open() || !perceptionFile.is_open()) {
             std::cerr << "Error opening input files." << std::endl;
             return;
         }
-
+    
     int step_cnt = 0;
     uint32_t globalIndexVelocity;
     uint32_t globalIndexPerception;
     
-    while(velocityFile >> globalIndexVelocity &&
-          perceptionFile >> globalIndexPerception)
+    perceptionFile >> globalIndexPerception;
+    velocityFile >> globalIndexVelocity;
+    VectorXd velocity;
+
+    while(rclcpp::ok())
     {
-        if(globalIndexVelocity != globalIndexPerception){continue;}
-        std::cout<<globalIndexVelocity<<" Velocity goes with Perception: "<<globalIndexPerception<<std::endl;
-        // Read velocity from file
-        VectorXd velocity(3);
-        for (int i = 0; i < 3; ++i)
-        {
-            velocityFile >> velocity(i);
+        //cout<<"LOOP SPOTTED\n";
+        while(globalIndexVelocity != globalIndexPerception){
+            velocity = readVelocity();
+            predictionStep(state_vector, Sigma, velocity, Q);
+            velocityFile >> globalIndexVelocity;  
         }
 
-        // Read variance matrix from velocity file
-        Matrix<double, 3, 3> varianceMatrixVelocity;
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                velocityFile >> varianceMatrixVelocity(i, j);
-            }
+        velocity = readVelocity();
+        while(globalIndexVelocity == globalIndexPerception){
+            //cout<<velocity.transpose()<<endl;
+            readOdometry();
+            predictionStep(state_vector, Sigma, velocity, Q);
+            updateStep(state_vector, Sigma, Rt);
+            perceptionFile >> globalIndexPerception;
         }
-        // JUST FOR TESTING
-        //if(globalIndexVelocity >= 500){std::cout<<"Enough!"; break;}
-
-        // Read perception measurements from file
-        readList(perceptionFile, measurements.class_list);
-        readList(perceptionFile, measurements.theta_list);
-        readList(perceptionFile, measurements.range_list);
-
-        if(measurements.theta_list.size() != measurements.range_list.size()){
-            cout<<" FUCKED UP TXT FORMAT!!!\n";
-            return;
-        }
-
-        // Prediction step
-        predictionStep(state_vector, Sigma, velocity, Q);
-
-        // Update step
-        updateStep(state_vector, Sigma, Rt);
-
+        velocityFile >> globalIndexVelocity; 
+        if(globalIndexPerception == 1640){break;}
+        //std::cout<<globalIndexVelocity<<" Velocity goes with Perception: "<<globalIndexPerception<<std::endl;
+        if(velocityFile.eof() || perceptionFile.eof()){
+            velocityFile.close();
+            perceptionFile.close();
+            cout<<"THATS ALL FOLKS\n"; 
+            break;}
+        
         // Estimated State
-        //std::cout << "Step: " << step_cnt << ", Estimated State: " << state_vector.transpose() << std::endl;
+        std::cout << "Step: " << step_cnt << ", Estimated State: " << state_vector.transpose() << std::endl;
         step_cnt++;
     }
-    cout<<"THATS ALL FOLKS\n";
   }
 
 
@@ -352,7 +343,38 @@ void readList(std::istream& input, std::vector<T>& output) {
         output.push_back(value);
     }
 }
- 
+
+VectorXd readVelocity(){
+    // Read velocity from file
+    VectorXd velocity(3);
+    for (int i = 0; i < 3; ++i)
+    {
+        velocityFile >> velocity(i);
+    }
+
+    // Read variance matrix from velocity file
+    Matrix<double, 3, 3> varianceMatrixVelocity;
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            velocityFile >> varianceMatrixVelocity(i, j);
+        }
+    }
+    //cout<<varianceMatrixVelocity.transpose()<<endl;
+    return velocity;
+}
+
+void readOdometry(){
+    // Read perception measurements from file
+    readList(perceptionFile, measurements.class_list);
+    readList(perceptionFile, measurements.theta_list);
+    readList(perceptionFile, measurements.range_list);
+
+    if(measurements.theta_list.size() != measurements.range_list.size()){
+        cout<<" FUCKED UP TXT FORMAT!!!\n";
+        return;
+    }
+}
+
 private:
     vector<pair<double, double>> landmark_distances;
     struct Measurements {
@@ -362,6 +384,8 @@ private:
     };
 
     Measurements measurements; 
+    std::ifstream velocityFile;
+    std::ifstream perceptionFile;
 };
 
 

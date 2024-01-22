@@ -5,15 +5,15 @@
 
 // Subscribe messages
 #include <geometry_msgs/msg/twist.hpp>
-#include <slam/msg/Perception2Slam.hpp>
+//#include <slam/msg/Perception2Slam.hpp>
 
 // Publish message
-#include "slam/msg/PoseMsg.hpp"
+//#include "slam/msg/PoseMsg.hpp"
 
 
 using namespace Eigen;
 using namespace std;
-
+/*
 class SlamNode : public rclcpp::Node {
 public:
     SlamNode() : Node("Slam_node") {
@@ -349,7 +349,7 @@ private:
     rclcpp::Subscription<slam::msg::Perception2Slam>::SharedPtr perception_subscriber_;
     rclcpp::Publisher<slam::msg::PoseMsg>::SharedPtr state_publisher_;
 };
-
+*/
 
 int main(int argc, char **argv) {
     rclcpp::init(argc, argv);
