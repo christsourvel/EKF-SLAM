@@ -1,0 +1,40 @@
+slam_from_file_node:
+  ros__parameters:
+    # This sets the mode of operation. Set true for slam and false for 
+    # localization
+    mapping_mode: true
+    track_map: "/Tracks/Acceleration.txt"
+    dynamic_accel_map: false
+
+    # This must be the same as the sampling rate of the log files if used
+    sampling_rate: 40
+
+    # Defines the starting position of the car
+    starting_position: [ -7.5, 0.0, 0.0 ]
+    starting_position_covariance: [ 0.5, 0.1, 0.1 ]
+
+    # The max distance perception measurements are accepted
+    perception_range: 13.0
+
+    # After how many time steps the optimization algorithm would be executed
+    optimization_interval: 4
+
+    # The max distance at which two cones would be associated
+    association_threshold: 1.9
+    min_observations: 4
+
+    # iSAM parameters
+    relinearize_threshold: 0.1
+    relinearize_skip: 1
+
+    left_orange: [0.0, -2.5]
+    right_orange: [0.0, 2.5]
+
+    # Not used right now
+    odometry_covariance_weight: 10.0
+    perception_covariance_weight: 0.01
+
+    # The files should be placed in the DataFiles directory and the variables
+    # below must have the relative path in the form "/DataFiles/my_log_file.txt"
+    perception_log: "/DataFiles/good_perceptionLog.txt" #before it was log_9
+    odometry_log: "/DataFiles/good_velocityLog.txt"
