@@ -4,15 +4,28 @@
 #include <fstream>
 
 using namespace Eigen;
+using namespace std;
 
-// Global vector to store landmark distances
-std::vector<std::pair<double, double> > landmark_distances;
+bool mapping = true;
+
+    vector<pair<double, double> > landmark_distances;
+    vector<double> landmark_colors;
+
+    struct Measurements {
+        std::vector<double> class_list;
+        std::vector<double> theta_list;
+        std::vector<double> range_list;
+    };
+
+    Measurements measurements; 
+    std::ifstream velocityFile("/Users/christos/Desktop/Experimental/EKF-SLAM/testing/good_velocityLog.txt");
+    std::ifstream perceptionFile("/Users/christos/Desktop/Experimental/EKF-SLAM/testing/good_perceptionLog.txt");
 
 // Function to perform kinematic update on pose
-VectorXd kinematic_update(const VectorXd& pose, const VectorXd& velocity) 
+Vector3d kinematic_update(const VectorXd& pose, const VectorXd& velocity) 
 {
     double dt = 0.1;  
-    VectorXd new_pose(3);
+    Vector3d new_pose(3);
     double v_x = velocity(0);
     double v_y = velocity(1);  
     double omega = velocity(2);
@@ -26,32 +39,28 @@ VectorXd kinematic_update(const VectorXd& pose, const VectorXd& velocity)
 }
 
 // Function to compute the motion model Jacobian
-MatrixXd motion_jacobian(const VectorXd& pose, const VectorXd& velocity) 
+Matrix3d motion_jacobian(const VectorXd& pose, const VectorXd& velocity) 
 {
     double dt = 0.1;  
     double v_x = velocity(0);
     double v_y = velocity(1);   
-    double omega = velocity(1);
     double theta = pose(2);
 
-    Eigen::Matrix3d Gx;                                                 // change - and 1 in dt
+        Matrix3d Gx;                                                 // change - and 1 in dt
         Gx << 1, 0, v_x * sin(theta) * dt - v_y * cos(theta) * dt,
               0, 1, v_x * cos(theta) * dt - v_y * sin(theta) * dt,
-              0, 0, dt;
+              0, 0, 1;
     
     return Gx;
 }
 
 // Function to compute noise transformation into state space
-MatrixXd noise_transformation(const VectorXd& pose, const VectorXd& velocity)
+Matrix3d noise_transformation(const VectorXd& pose)
 {
     double dt = 0.1;  
-    double v_x = velocity(0);
-    double v_y = velocity(1);
-    double omega = velocity(1);
     double theta = pose(2);
 
-    Eigen::Matrix3d Vx;
+        Matrix3d Vx;
         Vx << cos(theta) * dt, - sin(theta) * dt, 0,
               sin(theta) * dt, cos(theta) * dt, 0,
               0, 0, 1;
@@ -70,10 +79,10 @@ MatrixXd covariance_update(MatrixXd& Sigma, const MatrixXd& Gt, int state_size)
     MatrixXd Sigma_mv = Sigma.bottomLeftCorner(N, 3);
   
     // Perform operations
-    Eigen::MatrixXd Sigma_vv_new = Gt * Sigma_vv * Gt.transpose();
-    Eigen::MatrixXd Sigma_mm_new = Sigma_mm;  
-    Eigen::MatrixXd Sigma_vm_new = Gt * Sigma_vm;
-    Eigen::MatrixXd Sigma_mv_new = Sigma_vm_new.transpose();  
+    MatrixXd Sigma_vv_new = Gt * Sigma_vv * Gt.transpose();
+    MatrixXd Sigma_mm_new = Sigma_mm;  
+    MatrixXd Sigma_vm_new = Gt * Sigma_vm;
+    MatrixXd Sigma_mv_new = Sigma_vm_new.transpose();  
 
     // Reconstruct Sigma
     Sigma.topLeftCorner(3, 3) = Sigma_vv_new;
@@ -91,73 +100,82 @@ void predictionStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& vel
     MatrixXd Gt = motion_jacobian(state_vector.head(3), velocity); 
 
     // Noise Transformation into State Space
-    MatrixXd Vt = noise_transformation(state_vector.head(3), velocity);
+    MatrixXd Vt = noise_transformation(state_vector.head(3));
     MatrixXd Qt = Vt * Q * Vt.transpose();
     
     // State Prediction
     state_vector.head(3) = kinematic_update(state_vector.head(3), velocity);
 
     // Covariance Prediction
-    Sigma = covariance_update(Sigma, Gt, state_vector.size());
+    if(mapping){
+        MatrixXd expandedQ = MatrixXd::Zero(Sigma.rows(), Sigma.cols());
+        expandedQ.topLeftCorner(3, 3) = Q;
+        Sigma = covariance_update(Sigma, Gt, state_vector.size()) + expandedQ;
+    }
+    else{Sigma = (Gt * Sigma * Gt.transpose()) + Q;}
 }
 
 // Function to perform data association
-bool data_association(const VectorXd& state_vector, const VectorXd& measurements) 
+vector<pair<int, int> > data_association(const VectorXd& state_vector, vector<double> range,
+                                        vector<double> bearing, vector<double> color, vector<int> &unmatched) 
 {
     double x = state_vector(0);
     double y = state_vector(1);
     double theta = state_vector(2);
-    double range = measurements(0);
-    double bearing = measurements(1);
+    double association_distance_threshold = 1.9;
+    vector<pair<int, int> > proccessing;
 
-    double x_land = x + range * cos(theta + bearing);
-    double y_land = y + range * sin(theta + bearing);
-
-    double association_distance_threshold = 1.9; 
-    double least_distance_square = std::pow(association_distance_threshold, 2);
-
-    // Iterate through all of the cones in the current map
-    for (size_t i = 0; i < landmark_distances.size(); ++i) 
-    {
-        const auto& pair = landmark_distances[i];
-        double current_distance_square = std::pow(x_land - pair.first, 2) + std::pow(y_land - pair.second, 2);
-    
-        if(current_distance_square < least_distance_square) 
-        {
-            return true;  
+    for(int j = 0; j < range.size(); ++j){
+        double least_distance_square = std::pow(association_distance_threshold, 2);
+        int best_match = -1;
+        double x_land = x + range[j] * cos(theta + bearing[j]);
+        double y_land = y + range[j] * sin(theta + bearing[j]);
+        
+        // Iterate through all of the cones in the current map
+        for (size_t i = 0; i < landmark_distances.size(); ++i) 
+        {   
+          const auto& pair = landmark_distances[i];
+          double current_distance_square = std::pow(x_land - pair.first, 2) + std::pow(y_land - pair.second, 2);//cout<<"state vector: "<<state_vector.transpose()<<endl;
+         if(current_distance_square < least_distance_square && color[j] == landmark_colors[i]) 
+          {
+            least_distance_square = current_distance_square; 
+            best_match = i;
+          }//cout<<"PANIK"<<endl;
         }
+        if(best_match >= 0){proccessing.push_back(std::make_pair(best_match, j));}
+        else{unmatched.push_back(j);}
     }
-    return false;  
+    return proccessing;
 }
 
 // Function to add new landmarks
-void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& measurements, int unmatched)
+void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, vector<double> range,
+                       vector<double> bearing, vector<double> color, vector<int> unmatched)
 {
     double x = state_vector(0);
     double y = state_vector(1);
     double theta = state_vector(2);
-    double range = measurements(0);
-    double bearing = measurements(1);
-    
-    for(int i = 0; i < unmatched; ++i)
-    {
-        double x_land = x + range * cos(theta + bearing);
-        double y_land = y + range * sin(theta + bearing);
+ 
+    for(int i = 0; i < unmatched.size(); ++i)
+    {   
+        double x_land = x + range[unmatched[i]] * cos(theta + bearing[unmatched[i]]);
+        double y_land = y + range[unmatched[i]] * sin(theta + bearing[unmatched[i]]);
         landmark_distances.push_back(std::make_pair(x_land, y_land));
-
+        landmark_colors.push_back(color[unmatched[i]]);
+        
         VectorXd new_state_vector(state_vector.size() + 2);
         new_state_vector << state_vector, x_land, y_land;
 
         MatrixXd Hu_inv(2,3);
-            Hu_inv << 1, 0, -1 * range * sin(theta + bearing),
-                      0, 1, range * cos(theta + bearing);
-
-        MatrixXd H_inv = MatrixXd::Zero(2,state_vector.size());
+            Hu_inv << 1, 0, -1 * range[unmatched[i]] * sin(theta + bearing[unmatched[i]]),
+                      0, 1, range[unmatched[i]] * cos(theta + bearing[unmatched[i]]);
+        
+        MatrixXd H_inv = MatrixXd::Zero(2, state_vector.size());
         H_inv.block(0, 0, 2, 3) = Hu_inv;
-
+        
         MatrixXd Hi_inv(2,2);
-            Hi_inv << cos(theta + bearing), -1 * range * sin(theta + bearing),
-                      sin(theta + bearing), range * cos(theta + bearing);
+            Hi_inv << cos(theta + bearing[unmatched[i]]), -1 * range[unmatched[i]] * sin(theta + bearing[unmatched[i]]),
+                      sin(theta + bearing[unmatched[i]]), range[unmatched[i]] * cos(theta + bearing[unmatched[i]]);
 
         Matrix2d Rt;                              
         Rt << 0.1, 0,
@@ -177,38 +195,36 @@ void add_new_landmarks(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& 
 }
 
 // UPDATE STEP
-void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& measurements, const MatrixXd& R) 
+void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const MatrixXd& R) 
 {
     double x = state_vector(0);
     double y = state_vector(1);
     double theta = state_vector(2);
+    vector<double> range = measurements.range_list;
+    vector<double> bearing = measurements.theta_list;
+    vector<double> color = measurements.class_list;
+    vector<int> unmatched;
     
-    int measurements_num = 2;
-    int unmatched_num = 1;
-
-    // Initializing new landmarks
-    if (!data_association(state_vector, measurements))
-    {
-        add_new_landmarks(state_vector, Sigma, measurements, unmatched_num);
-    }
-
-    // Perception measurements
-    double range = measurements(0);
-    double bearing = measurements(1);
-    MatrixXd zt(2,1);
-        zt << range, 
-              bearing;
-
-    MatrixXd Ht = MatrixXd::Zero(2 * measurements_num, state_vector.size());              //CHANGE
-    MatrixXd Dzt = MatrixXd::Zero(2 * measurements_num, 1);
-    MatrixXd Rt = MatrixXd::Zero(2 * measurements_num, 2 * measurements_num);
+    // 1: matched_landmark, 2: measurement_index
+    vector<pair<int, int> > matched = data_association(state_vector, range, bearing, color, unmatched);
+    //cout<<"AFTER DA: "<<state_vector.head(3).transpose()<<endl;
+    // add unmatched measurements on mapping mode
+    if(mapping){add_new_landmarks(state_vector, Sigma, range, bearing, color, unmatched);}
+      //  cout<<"AFTER NEW_LANDMARKS: "<<state_vector.head(3).transpose()<<endl;
+    MatrixXd Ht = MatrixXd::Zero(2 * matched.size(), state_vector.size());
+    MatrixXd Dzt = MatrixXd::Zero(2 * matched.size(), 1);
+    MatrixXd Rt = MatrixXd::Zero(2 * matched.size(), 2 * matched.size());
     Rt.diagonal().array() = 0.1;
-
-    int matched_landmarks = 1;
-    for(int i=0; i<matched_landmarks; ++i)
-    {
-            double x_land = x + range * cos(bearing + theta);
-            double y_land = y + range * sin(bearing + theta);
+        
+    for(int i=0; i<matched.size(); ++i)
+    {   
+            // Actual observation
+            MatrixXd zt(2,1);
+                zt << range[matched[i].second],
+                      bearing[matched[i].second];
+            
+            double x_land = state_vector(2 * matched[i].first + 2);
+            double y_land = state_vector(2 * matched[i].first + 3);
             double dx = x_land - x;
             double dy = y_land - y;
 
@@ -216,7 +232,7 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& measure
                 d << dx,
                      dy;
 
-            double q = (d.transpose() * d).value();
+            double q = (d.transpose() * d)(0,0);
             double q_sqrt = sqrt(q);
 
             // EXPECTED OBSERVATION
@@ -224,28 +240,41 @@ void updateStep(VectorXd& state_vector, MatrixXd& Sigma, const VectorXd& measure
                 zt_exp << q_sqrt,
                      atan2(dy,dx);
             
-            Dzt.block(2 * matched_landmarks, 0, 2, 1) = zt - zt_exp;
-            
             MatrixXd Htu(2,3);
                 Htu << - q_sqrt * dx, - q_sqrt * dy, 0,
                             dy, - dx, - q; 
 
+           if(mapping){ 
+
+            Dzt.block(2 * i, 0, 2, 1) = zt - zt_exp;
             MatrixXd Htj(2,2);
                 Htj << q_sqrt * dx, q_sqrt * dy,
                         - dy, dx;
             
-            Ht.block(2 * matched_landmarks, 0, 2, 3) = Htu;
-            Ht.block(2 * matched_landmarks, 2 * i + 3, 2, 2) = Htj;
-    }
-
-        // KALMAN GAIN
+            Ht.block(2 * i, 0, 2, 3) = Htu;
+            Ht.block(2 * i, 2 * matched[i].first + 3, 2, 2) = Htj;
+           }
+           else{
+                MatrixXd Ht = Htu;
+                MatrixXd Dzt = zt - zt_exp;
+           }
+    }   
+        if(matched.size() > 0){// KALMAN GAIN
         MatrixXd Kt = Sigma * Ht.transpose() * ((Ht * Sigma * Ht.transpose()) + Rt).inverse();
-        
+        //cout<<"STATE AT END OF PREDICTION: "<<state_vector.transpose()<<endl;
+        //cout<<"SIGMA AT END OF PREDICTION: "<<Sigma.transpose()<<endl;
+        //cout<<"KT: "<<Kt.transpose()<<endl;
+        //cout<<"HT*SIGMA: "<<Sigma * Ht.transpose()<<endl;
+        //cout<<"Rt: "<<Rt.transpose()<<endl;
+       // cout<<"Dzt: "<<Dzt.transpose()<<endl;
         // FINAL STATE 
+        //cout<<"STATE AT END OF PREDICTION: "<<state_vector.transpose()<<endl;
+        //cout<<"SIGMA AT END OF PREDICTION: "<<Sigma.transpose()<<endl;
         state_vector = state_vector + Kt * Dzt; // or K * `Δzt
-
+       // cout<<"AFTER STATE UPDATE: "<<state_vector.head(3).transpose()<<endl;
         // FINAL COV MATRIX
         Sigma = (MatrixXd::Identity(state_vector.size(), state_vector.size()) - Kt * Ht) * Sigma;
+        } 
 }
  
 // Function to read a list of values from a line and store them in a vector
@@ -260,6 +289,40 @@ void readList(std::istream& input, std::vector<T>& output) {
     }
 }
 
+VectorXd readVelocity(){
+    // Read velocity from file
+    VectorXd velocity(3);
+    for (int i = 0; i < 3; ++i)
+    {
+        velocityFile >> velocity(i);
+    }
+
+    // Read variance matrix from velocity file
+    Matrix<double, 3, 3> varianceMatrixVelocity;
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            velocityFile >> varianceMatrixVelocity(i, j);
+        }
+    }
+    //cout<<varianceMatrixVelocity.transpose()<<endl;
+    //cout<<velocity.transpose()<<endl;
+    return velocity;
+}
+
+void readOdometry(){
+    measurements.class_list.clear();
+    measurements.theta_list.clear();
+    measurements.range_list.clear();
+    // Read perception measurements from file
+    readList(perceptionFile, measurements.class_list);
+    readList(perceptionFile, measurements.theta_list);
+    readList(perceptionFile, measurements.range_list);
+
+    if(measurements.theta_list.size() != measurements.range_list.size()){
+        cout<<" FUCKED UP TXT FORMAT!!!\n";
+        return;
+    }
+}
 
 int main() 
 {
@@ -277,74 +340,57 @@ int main()
              0, 0.01, 0,
              0, 0, 0.01;  
     
-    Matrix2d R;                                      // sensor noise
-        R << 0.1, 0,
+    Matrix2d Rt;                                      // sensor noise
+        Rt << 0.1, 0,
              0, 0.1;                                // obs_noise << 0.0001, 0,
 					                               //  0, 0.011*std::pow(landmark.range+1,2) - 0.082*(landmark.range+1) + 0.187;     change if x,y and not range-bearing
      
-
- std::ifstream velocityFile("good_velocityLog.txt");
- std::ifstream perceptionFile("good_perceptionLog.txt");
 
   if (!velocityFile.is_open() || !perceptionFile.is_open()) {
         std::cerr << "Error opening input files." << std::endl;
         return 1;
     }
 
-    int step_cnt = 0;
+       int step_cnt = 0;
     uint32_t globalIndexVelocity;
     uint32_t globalIndexPerception;
-    std::string line;
-    std::vector<int32_t> class_list;
-    std::vector<float> theta_list;
-    std::vector<float> range_list;
     
-    while(velocityFile >> globalIndexVelocity &&
-          perceptionFile >> globalIndexPerception)
+    perceptionFile >> globalIndexPerception;
+    velocityFile >> globalIndexVelocity;
+    VectorXd velocity;
+
+    while(!velocityFile.eof() && !perceptionFile.eof())
     {
-        std::cout<<globalIndexVelocity<<" goes with: "<<globalIndexPerception<<std::endl;
-        // Read velocity from file
-        VectorXd velocity(3);
-        for (int i = 0; i < 3; ++i)
-        {
-            velocityFile >> velocity(i);
+        while(globalIndexVelocity != globalIndexPerception){
+            velocity = readVelocity();
+            predictionStep(state_vector, Sigma, velocity, Q);
+
+            velocityFile >> globalIndexVelocity;  
+            cout<<globalIndexVelocity<<endl;
         }
 
-        // Read variance matrix from velocity file
-        Matrix<double, 3, 3> varianceMatrixVelocity;
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                velocityFile >> varianceMatrixVelocity(i, j);
-            }
+        velocity = readVelocity();
+        while(globalIndexVelocity == globalIndexPerception){
+            readOdometry();
+            predictionStep(state_vector, Sigma, velocity, Q);
+            updateStep(state_vector, Sigma, Rt);
+            perceptionFile >> globalIndexPerception;
+            cout<<globalIndexVelocity<<endl;
         }
-        // JUST FOR TESTING
-        if(globalIndexVelocity >= 500){std::cout<<"Enough!"; break;}
-
-        // Read perception measurements from file
-        readList(perceptionFile, class_list);
-        readList(perceptionFile, theta_list);
-        readList(perceptionFile, range_list);
-
-
-        VectorXd measurements(2);
-            measurements << range_list[0], theta_list[0];
-
-        // Prediction step
-        predictionStep(state_vector, Sigma, velocity, Q);
-
-        // Update step
-        updateStep(state_vector, Sigma, measurements, R);
-
+        velocityFile >> globalIndexVelocity; 
+        if(globalIndexPerception == 1640){break;}
+        //std::cout<<globalIndexVelocity<<" Velocity goes with Perception: "<<globalIndexPerception<<std::endl;
+        if(velocityFile.eof() || perceptionFile.eof()){
+            velocityFile.close();
+            perceptionFile.close();
+            cout<<"THATS ALL FOLKS\n"; 
+            break;}
+        cout<<globalIndexPerception<<endl;
         // Estimated State
-       // std::cout << "Step: " << step_cnt << ", Estimated State: " << state_vector.transpose() << std::endl;
+        //std::cout << "Step: " << globalIndexPerception << ", Estimated State: " << state_vector.transpose() << std::endl;
         step_cnt++;
     }
-    
-    velocityFile.close();
-    perceptionFile.close();
-
-    return 0;
-}
+  }
 
 
 
